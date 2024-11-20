@@ -1,0 +1,237 @@
+{
+    "data": [
+        {
+            "patient_id": "123456",
+            "first_name": "John",
+            "last_name": "Doe",
+            "date_of_birth": "1985-06-15",
+            "gender": "Male",
+            "contact_info": {
+                "phone": "+1-555-123-4567",
+                "email": "johndoe@example.com",
+                "address": {
+                    "street": "123 Main Street",
+                    "city": "Springfield",
+                    "state": "IL",
+                    "zip_code": "62704",
+                    "country": "USA"
+                }
+            },
+            "medical_history": [
+                {
+                    "condition": "Hypertension",
+                    "diagnosed_date": "2015-03-10",
+                    "treatment": "Medication and lifestyle changes"
+                },
+                {
+                    "condition": "Type 2 Diabetes",
+                    "diagnosed_date": "2020-08-20",
+                    "treatment": "Insulin therapy"
+                }
+            ],
+            "allergies": [
+                "Penicillin",
+                "Peanuts"
+            ],
+            "current_medications": [
+                {
+                    "medication_name": "Lisinopril",
+                    "dosage": "10 mg",
+                    "frequency": "Once daily"
+                },
+                {
+                    "medication_name": "Metformin",
+                    "dosage": "500 mg",
+                    "frequency": "Twice daily"
+                }
+            ],
+            "emergency_contact": {
+                "name": "Jane Doe",
+                "relationship": "Spouse",
+                "phone": "+1-555-987-6543"
+            },
+            "insurance_info": {
+                "provider": "HealthCare Plus",
+                "policy_number": "HCP123456789",
+                "group_number": "G12345"
+            },
+            "doctor_assigned": {
+                "doctor_id": "D7890",
+                "name": "Dr. Emily Smith",
+                "specialty": "Endocrinologist",
+                "contact": {
+                    "phone": "+1-555-111-2222",
+                    "email": "emily.smith@hospital.com"
+                }
+            }
+        },
+        {
+            "patient_id": "789101",
+            "first_name": "Alice",
+            "last_name": "Johnson",
+            "date_of_birth": "1990-11-02",
+            "gender": "Female",
+            "contact_info": {
+                "phone": "+1-555-321-6549",
+                "email": "alicejohnson@example.com",
+                "address": {
+                    "street": "456 Elm Street",
+                    "city": "Shelbyville",
+                    "state": "IL",
+                    "zip_code": "62565",
+                    "country": "USA"
+                }
+            },
+            "medical_history": [
+                {
+                    "condition": "Asthma",
+                    "diagnosed_date": "2000-05-15",
+                    "treatment": "Inhaler and regular check-ups"
+                }
+            ],
+            "allergies": [
+                "Dust",
+                "Cats"
+            ],
+            "current_medications": [
+                {
+                    "medication_name": "Albuterol",
+                    "dosage": "90 mcg",
+                    "frequency": "As needed"
+                }
+            ],
+            "emergency_contact": {
+                "name": "Michael Johnson",
+                "relationship": "Brother",
+                "phone": "+1-555-333-8888"
+            },
+            "insurance_info": {
+                "provider": "WellCare Insurance",
+                "policy_number": "WCI987654321",
+                "group_number": "G67890"
+            },
+            "doctor_assigned": {
+                "doctor_id": "D4567",
+                "name": "Dr. Andrew Brown",
+                "specialty": "Pulmonologist",
+                "contact": {
+                    "phone": "+1-555-444-5555",
+                    "email": "andrew.brown@hospital.com"
+                }
+            }
+        },
+        {
+            "patient_id": "112233",
+            "first_name": "Robert",
+            "last_name": "Smith",
+            "date_of_birth": "1972-04-23",
+            "gender": "Male",
+            "contact_info": {
+                "phone": "+1-555-777-9999",
+                "email": "robertsmith@example.com",
+                "address": {
+                    "street": "789 Pine Road",
+                    "city": "Capital City",
+                    "state": "IL",
+                    "zip_code": "62629",
+                    "country": "USA"
+                }
+            },
+            "medical_history": [
+                {
+                    "condition": "Chronic Back Pain",
+                    "diagnosed_date": "2010-07-12",
+                    "treatment": "Physical therapy and pain management"
+                },
+                {
+                    "condition": "High Cholesterol",
+                    "diagnosed_date": "2018-02-18",
+                    "treatment": "Statins and diet modification"
+                }
+            ],
+            "allergies": [
+                "Latex"
+            ],
+            "current_medications": [
+                {
+                    "medication_name": "Atorvastatin",
+                    "dosage": "20 mg",
+                    "frequency": "Once daily"
+                }
+            ],
+            "emergency_contact": {
+                "name": "Laura Smith",
+                "relationship": "Wife",
+                "phone": "+1-555-555-4444"
+            },
+            "insurance_info": {
+                "provider": "Prime Health",
+                "policy_number": "PH123123123",
+                "group_number": "G45678"
+            },
+            "doctor_assigned": {
+                "doctor_id": "D1234",
+                "name": "Dr. Sarah Lee",
+                "specialty": "Orthopedist",
+                "contact": {
+                    "phone": "+1-555-666-7777",
+                    "email": "sarah.lee@hospital.com"
+                }
+            }
+        },
+        {
+            "patient_id": "445566",
+            "first_name": "Emily",
+            "last_name": "Clark",
+            "date_of_birth": "1988-09-12",
+            "gender": "Female",
+            "contact_info": {
+                "phone": "+1-555-888-0000",
+                "email": "emilyclark@example.com",
+                "address": {
+                    "street": "321 Oak Avenue",
+                    "city": "Rivertown",
+                    "state": "IL",
+                    "zip_code": "62706",
+                    "country": "USA"
+                }
+            },
+            "medical_history": [
+                {
+                    "condition": "Migraine",
+                    "diagnosed_date": "2016-05-25",
+                    "treatment": "Prescription medication and stress management"
+                }
+            ],
+            "allergies": [
+                "Shellfish"
+            ],
+            "current_medications": [
+                {
+                    "medication_name": "Sumatriptan",
+                    "dosage": "50 mg",
+                    "frequency": "As needed"
+                }
+            ],
+            "emergency_contact": {
+                "name": "Peter Clark",
+                "relationship": "Husband",
+                "phone": "+1-555-222-3333"
+            },
+            "insurance_info": {
+                "provider": "SecureHealth",
+                "policy_number": "SH555888000",
+                "group_number": "G11223"
+            },
+            "doctor_assigned": {
+                "doctor_id": "D6789",
+                "name": "Dr. Nancy White",
+                "specialty": "Neurologist",
+                "contact": {
+                    "phone": "+1-555-999-1111",
+                    "email": "nancy.white@hospital.com"
+                }
+            }
+        }
+    ]
+}
