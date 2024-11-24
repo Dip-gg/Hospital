@@ -1,27 +1,3 @@
-// import React from 'react';
-// import { Button, Container, Title } from '@mantine/core';
-// import { useNavigate } from 'react-router-dom';
-
-// function HomePage() {
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     navigate('/');
-//   };
-
-//   return (
-//     <Container>
-//       <Title align="center" mt={40}>Welcome to the Home Page</Title>
-//       <Button onClick={handleLogout} mt="xl" fullWidth>
-//         Logout
-//       </Button>
-//     </Container>
-//   );
-// }
-
-// export default HomePage;
-
-
 import React, { useState } from 'react';
 import { AppShell, Burger, Group, Skeleton, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
