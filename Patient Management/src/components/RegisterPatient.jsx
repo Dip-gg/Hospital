@@ -8,6 +8,8 @@ import axios from 'axios';
 function RegisterPage() {
   const [value, setValue] = useState(null);
   const [showInsurance, setShowInsurance] = useState(false);
+  const [showMedicalHistory, setShowMedicalHistory] = useState(false);
+  const [showMedications, setShowMedications] = useState(false);
   const [notification, setNotification] = useState(null);
   const icon = <IconCalendar style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
   const [formData, setFormData] = useState({
@@ -35,7 +37,13 @@ function RegisterPage() {
       },
     ],
     allergies: [],
-    current_medications: [],
+    current_medications: [
+      {
+        medication_name: "",
+        dosage: "",
+        frequency: ""
+      },
+    ],
     emergency_contact: {
       name: '',
       relationship: '',
@@ -75,9 +83,9 @@ function RegisterPage() {
 
   const handleSubmit = async () => {
     const payload = { ...formData };
-    if (!showInsurance) {
-      payload.insurance_info = null;
-    }
+    if (!showInsurance) payload.insurance_info = null;
+    if (!showMedicalHistory) payload.medical_history = null;
+    if (!showMedications) payload.current_medications = null;
 
     try {
       await axios.post('http://localhost:8080/register_new_patient', payload);
@@ -220,19 +228,6 @@ function RegisterPage() {
         />
       </SimpleGrid>
 
-      {/* Current Medications */}
-      <SimpleGrid cols={{ base: 1, sm: 3 }}>
-        <Textarea
-          label="Current Medications"
-          placeholder="List current medications with dosage and frequency"
-          mt="md"
-          minRows={4}
-          maxRows={4}
-          autosize
-          onChange={(e) => handleChange('currentMedications', e.target.value)}
-        />
-      </SimpleGrid>
-
       {/* Emergency Contact */}
       <SimpleGrid cols={{ base: 1, sm: 3 }}>
         <TextInput label="Emergency Contact Name" placeholder="Enter name" mt="md" onChange={(e) => handleChange('emergency_content.name', e.target.value)} required />
@@ -248,56 +243,127 @@ function RegisterPage() {
         <TextInput label="Doctor Contact Email" placeholder="doctor@example.com" mt="md" onChange={(e) => handleChange('doctor_assigned.contact.email', e.target.value)} required />
       </SimpleGrid>
 
-      <Text size="xl" mt="md">Medical History</Text>
-      {/* Medical History */}
-      {formData.medical_history.map((entry, index) => (
-        <SimpleGrid key={index} cols={{ base: 1, sm: 4 }} mt="md">
-          <TextInput
-            label={`Condition ${index + 1}`}
-            placeholder="Enter medical condition"
-            value={entry.condition}
-            onChange={(e) => handleChange(`medical_history.${index}.condition`, e.target.value)}
-          />
-          <DatePickerInput
-            label="Date of Diagnosis"
-            placeholder="Select date"
-            value={entry.diagnosed_date}
-            onChange={(value) => handleChange(`medical_history.${index}.diagnosed_date`, value)}
-          />
-          <TextInput
-            label="Treatment"
-            placeholder="Enter treatment"
-            value={entry.treatment}
-            onChange={(e) => handleChange(`medical_history.${index}.treatment`, e.target.value)}
-          />
+      <Checkbox
+        mt="md"
+        checked={showMedicalHistory}
+        onChange={(event) => setShowMedicalHistory(event.currentTarget.checked)}
+        label="Add Medical History"
+      />
+      {showMedicalHistory && (
+        <>
+          <Text size="xl" mt="md">Medical History</Text>
+          {/* Medical History */}
+          {formData.medical_history.map((entry, index) => (
+            <SimpleGrid key={index} cols={{ base: 1, sm: 4 }}>
+              <TextInput
+                label={`Condition ${index + 1}`}
+                placeholder="Enter medical condition"
+                value={entry.condition}
+                onChange={(e) => handleChange(`medical_history.${index}.condition`, e.target.value)}
+              />
+              <DatePickerInput
+                label="Date of Diagnosis"
+                placeholder="Select date"
+                value={entry.diagnosed_date}
+                onChange={(value) => handleChange(`medical_history.${index}.diagnosed_date`, value)}
+              />
+              <TextInput
+                label="Treatment"
+                placeholder="Enter treatment"
+                value={entry.treatment}
+                onChange={(e) => handleChange(`medical_history.${index}.treatment`, e.target.value)}
+              />
+              <Button
+                mt="md"
+                color="red"
+                onClick={() => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    medical_history: prev.medical_history.filter((_, i) => i !== index),
+                  }));
+                }}
+              >
+                Remove
+              </Button>
+            </SimpleGrid>
+          ))}
           <Button
             mt="md"
-            color="red"
             onClick={() => {
               setFormData((prev) => ({
                 ...prev,
-                medical_history: prev.medical_history.filter((_, i) => i !== index),
+                medical_history: [
+                  ...prev.medical_history,
+                  { condition: '', diagnosed_date: null, treatment: '' },
+                ],
               }));
             }}
           >
-            Remove
+            Add Another Condition
           </Button>
-        </SimpleGrid>
-      ))}
-      <Button
+        </>
+      )}
+
+      <Checkbox
         mt="md"
-        onClick={() => {
-          setFormData((prev) => ({
-            ...prev,
-            medical_history: [
-              ...prev.medical_history,
-              { condition: '', diagnosed_date: null, treatment: '' },
-            ],
-          }));
-        }}
-      >
-        Add Another Condition
-      </Button>
+        checked={showMedications}
+        onChange={(event) => setShowMedications(event.currentTarget.checked)}
+        label="Add Current Medications"
+      />
+      {/* Current Medications */}
+      {showMedications && (
+        <>
+          <Text size="xl" mt="md">Current Medication</Text>
+          {formData.current_medications.map((entry, index) => (
+            <SimpleGrid key={index} cols={{ base: 1, sm: 4 }}>
+              <TextInput
+                label={`Medication ${index + 1}`}
+                placeholder="Enter medication name"
+                value={entry.medication_name}
+                onChange={(e) => handleChange(`current_medications.${index}.medication_name`, e.target.value)}
+              />
+              <TextInput
+                label="Dosage"
+                placeholder="Enter Dosage"
+                value={entry.dosage}
+                onChange={(e) => handleChange(`current_medications.${index}.dosage`, e.target.value)}
+              />
+              <TextInput
+                label="Frequency of Medication"
+                placeholder="Enter Frequency"
+                value={entry.frequency}
+                onChange={(e) => handleChange(`current_medications.${index}.frequency`, e.target.value)}
+              />
+              <Button
+                mt="md"
+                color="red"
+                onClick={() => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    current_medications: prev.current_medications.filter((_, i) => i !== index),
+                  }));
+                }}
+              >
+                Remove
+              </Button>
+            </SimpleGrid>
+          ))}
+          <Button
+            mt="md"
+            onClick={() => {
+              setFormData((prev) => ({
+                ...prev,
+                current_medications: [
+                  ...prev.current_medications,
+                  { medication_name: '', dosage: null, frequency: '' },
+                ],
+              }));
+            }}
+          >
+            Add Another Condition
+          </Button>
+        </>
+      )}
 
       <Checkbox
         mt="md"

@@ -63,6 +63,17 @@
                     "phone": "+1-555-111-2222",
                     "email": "emily.smith@hospital.com"
                 }
+            },
+            "visitation_history": {
+                "12-11-2024-16-39-00": {
+                    "parts": {
+                        "heart":true,
+                        "kidney":true,
+                        "eyes":false,
+                        "lungs":false
+                    },
+                    "comments": ""
+                }
             }
         },
         {
