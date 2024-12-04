@@ -1,6 +1,6 @@
 // RegisterPage.jsx
 import React, { useState } from 'react';
-import { Container, Title, TextInput, Button, Select, Textarea, SimpleGrid, rem, Checkbox, Notification, Text } from '@mantine/core';
+import { Container, Title, TextInput, Button, Select, Textarea, SimpleGrid, rem, Checkbox, Notification, Text, Divider } from '@mantine/core';
 import { IconCalendar, IconCheck, IconX } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import axios from 'axios';
@@ -39,10 +39,17 @@ function RegisterPage() {
     allergies: [],
     current_medications: [
       {
+<<<<<<< HEAD
         medication_name: "",
         dosage: "",
         frequency: ""
       },
+=======
+        medication_name: '',
+        dosage: '',
+        frequency: '',
+      }
+>>>>>>> 0af19a027aea5035ab4e71009f4663877bca3723
     ],
     emergency_contact: {
       name: '',
@@ -306,6 +313,7 @@ function RegisterPage() {
 
       <Checkbox
         mt="md"
+<<<<<<< HEAD
         checked={showMedications}
         onChange={(event) => setShowMedications(event.currentTarget.checked)}
         label="Add Current Medications"
@@ -364,6 +372,74 @@ function RegisterPage() {
           </Button>
         </>
       )}
+=======
+        onClick={() => {
+          setFormData((prev) => ({
+            ...prev,
+            medical_history: [
+              ...prev.medical_history,
+              { condition: '', diagnosed_date: null, treatment: '' },
+            ],
+          }));
+        }}
+      >
+        Add Another Condition
+      </Button>
+      
+      <Divider size='md' mt='sm'/>
+      {/* Current Medications */}
+      <Text size="xl" mt="md">Current Medications</Text>
+      {formData.current_medications.map((entry, index) => (
+      <SimpleGrid cols={{ base: 1, sm: 4 }}>
+        <TextInput
+          label="Medication Name"
+          placeholder="Enter Med Name"
+          value={entry.medication_name}
+          onChange={(e) => handleChange(`current_medications.${index}.medication_name`, e.target.value)}
+        />
+
+        <TextInput
+          label="Dosage"
+          placeholder="Enter Dosage"
+          value={entry.treatment}
+          onChange={(e) => handleChange(`current_medications.${index}.dosage`, e.target.value)}
+        />
+
+        <TextInput
+          label="Frequency of Medication"
+          placeholder="Enter Frequency"
+          value={entry.treatment}
+          onChange={(e) => handleChange(`current_medications.${index}.frequency`, e.target.value)}
+        />
+        <Button
+            mt="md"
+            color="red"
+            onClick={() => {
+              setFormData((prev) => ({
+                ...prev,
+                current_medications: prev.current_medications.filter((_, i) => i !== index),
+              }));
+            }}
+          >
+            Remove
+          </Button>
+      </SimpleGrid>
+      ))}
+      <Button
+        mt="md"
+        onClick={() => {
+          setFormData((prev) => ({
+            ...prev,
+            current_medications: [
+              ...prev.current_medications,
+              { medication_name: '', dosage: '', frequency: '' },
+            ],
+          }));
+        }}
+      >
+        Add Another Condition
+      </Button>
+>>>>>>> 0af19a027aea5035ab4e71009f4663877bca3723
 
       <Checkbox
         mt="md"
