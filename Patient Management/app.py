@@ -21,6 +21,34 @@ def generate_unique_patient_id(existing_ids):
         if new_id not in existing_ids:
             return new_id
 
+# Load user data from JSON file
+
+
+def load_user_data():
+    with open("profiles.json", "r") as file:
+        return json.load(file)
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    # Get input from frontend
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+
+    # Load user data
+    user_data = load_user_data()["users"]
+
+    # Find the user in the data
+    user = next((u for u in user_data if u["username"]
+                == username and u["password"] == password), None)
+
+    # Check if user exists and return response
+    if user:
+        return jsonify({"success": True, "is_admin": user["is_admin"]}), 200
+    else:
+        return jsonify({"success": False, "message": "Invalid username or password"}), 401
+
 
 @app.route('/get_patient_data', methods=['GET'])
 def get_patient_data():

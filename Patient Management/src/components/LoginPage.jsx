@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
+import axios from 'axios';
 import {
   Paper,
   TextInput,
@@ -13,7 +14,6 @@ import {
   Anchor,
   Group,
   Stack,
-  Divider,
 } from '@mantine/core';
 
 function LoginPage() {
@@ -23,24 +23,31 @@ function LoginPage() {
 
   const form = useForm({
     initialValues: {
-      email: '',
-      name: '',
+      username: '',
       password: '',
       terms: true,
     },
-    // validate: {
-    //   email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-    //   password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
-    // },
   });
 
-  const handleLogin = () => {
-    // Dummy login credentials (replace with real authentication logic)
-    if (form.values.email === 'admin' && form.values.password === 'password') {
-      // Navigate to home page upon successful login
-      navigate('/home');
-    } else {
-      setError('Invalid username or password');
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/login', {
+        username: form.values.username,
+        password: form.values.password,
+      });
+
+      if (response.data.success) {
+        if (response.data.is_admin) {
+          alert('Logged in as Admin');
+        } else {
+          alert('Logged in as Regular User');
+        }
+        navigate('/home'); // Navigate to home page upon successful login
+      } else {
+        setError(response.data.message || 'Login failed');
+      }
+    } catch (err) {
+      setError('An error occurred during login. Please try again.');
     }
   };
 
@@ -55,14 +62,12 @@ function LoginPage() {
           {upperFirst(type)} with
         </Text>
 
-        {/* <Group grow mb="md" mt="md">
-          <Button radius="xl">Google</Button>
-          <Button radius="xl">Twitter</Button>
-        </Group>
-
-        <Divider label="Or continue with email" labelPosition="center" my="lg" /> */}
-
-        <form onSubmit={form.onSubmit(handleLogin)}>
+        <form
+          onSubmit={form.onSubmit(() => {
+            if (type === 'login') handleLogin();
+            else setError('Registration not implemented yet');
+          })}
+        >
           <Stack>
             {type === 'register' && (
               <TextInput
@@ -76,11 +81,10 @@ function LoginPage() {
 
             <TextInput
               required
-              label="Email"
-              placeholder="hello@mantine.dev"
-              value={form.values.email}
-              onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && 'Invalid email'}
+              label="User Name"
+              placeholder="hello@example.com"
+              value={form.values.username}
+              onChange={(event) => form.setFieldValue('username', event.currentTarget.value)}
               radius="md"
             />
 
@@ -90,7 +94,6 @@ function LoginPage() {
               placeholder="Your password"
               value={form.values.password}
               onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-              error={form.errors.password && 'Password should include at least 6 characters'}
               radius="md"
             />
 
@@ -105,7 +108,7 @@ function LoginPage() {
             {error && <Text color="red">{error}</Text>}
           </Stack>
 
-          <Group mt="xl" justify='space-between'>
+          <Group mt="xl" justify="space-between">
             <Anchor
               component="button"
               type="button"
