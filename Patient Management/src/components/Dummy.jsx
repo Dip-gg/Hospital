@@ -35,7 +35,7 @@ function PatientDataTable() {
         return (
             <Container>
                 <Title align="center" mt={40}>Error</Title>
-                <Text mt="md" color="red">Failed to fetch data: {error.message}</Text>
+                <Text mt="md" c="red">Failed to fetch data: {error.message}</Text>
             </Container>
         );
     }

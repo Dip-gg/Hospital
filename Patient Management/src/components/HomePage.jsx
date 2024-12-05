@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { AppShell, Burger, Group, Skeleton, Button } from '@mantine/core';
+import React, { useState, useEffect } from 'react';
+import { AppShell, Burger, Group, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import RegisterPage from './RegisterPatient';
 import PatientDataTable from './Dummy';
+import ChangeColumns from './ChangeColumns'; // Add a ChangeColumns component
 
 export function HomePage() {
-
+  const location = useLocation();
   const navigate = useNavigate();
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [currentPage, setCurrentPage] = useState('main');
+  const isAdmin = location.state?.isAdmin || false;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -25,11 +27,12 @@ export function HomePage() {
     switch (currentPage) {
       case 'register':
         return <RegisterPage />;
+      case 'stock':
+        return <ChangeColumns />; // Render ChangeColumns component
       default:
         return <PatientDataTable />;
     }
-  }
-
+  };
 
   return (
     <AppShell
@@ -50,15 +53,19 @@ export function HomePage() {
       </AppShell.Header>
       <AppShell.Navbar p="md" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <div>
-          Navbar
           <Button onClick={() => handlePageChange('register')} mt="xl" fullWidth>
             Register Page
           </Button>
           <Button onClick={() => handlePageChange('dummy')} mt="xl" fullWidth>
             Dummy Page
           </Button>
+          {isAdmin && ( // Conditionally render the "Stock Page" button for admin users
+            <Button onClick={() => handlePageChange('stock')} mt="xl" fullWidth>
+              Stock Page
+            </Button>
+          )}
         </div>
-        <div style={{bottom: 0}}>
+        <div style={{ bottom: 0 }}>
           <Button
             onClick={handleLogout}
             mt="xl"

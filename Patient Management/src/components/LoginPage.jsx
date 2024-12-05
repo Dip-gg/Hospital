@@ -42,7 +42,7 @@ function LoginPage() {
         } else {
           alert('Logged in as Regular User');
         }
-        navigate('/home'); // Navigate to home page upon successful login
+        navigate('/home', { state: { isAdmin: response.data.is_admin } }); // Navigate to home page upon successful login
       } else {
         setError(response.data.message || 'Login failed');
       }

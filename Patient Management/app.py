@@ -10,6 +10,8 @@ CORS(app)
 
 # Define the path to the JSON file
 DATA_FILE = 'data2.json'
+SAVE_DIR = "saved_data.json"
+os.makedirs(SAVE_DIR, exist_ok=True)
 
 
 def generate_unique_patient_id(existing_ids):
@@ -98,6 +100,26 @@ def register_new_patient():
         return jsonify({"error": "File not found"}), 404
     except json.JSONDecodeError:
         return jsonify({"error": "Error decoding JSON"}), 500
+
+
+@app.route('/submit-colunms', methods=['POST'])
+def save_json():
+    try:
+        # Get JSON data from request
+        data = request.get_json()
+        if not data:
+            return jsonify({"message": "No JSON data provided"}), 400
+
+        # Create a file name based on a unique identifier (e.g., timestamp)
+        file_name = os.path.join(SAVE_DIR, "filtered_data.json")
+
+        # Save the JSON data to the file
+        with open(file_name, 'w') as file:
+            json.dump(data, file, indent=4)
+
+        return jsonify({"message": "Data saved successfully", "file": file_name}), 200
+    except Exception as e:
+        return jsonify({"message": "An error occurred", "error": str(e)}), 500
 
 
 if __name__ == '__main__':
