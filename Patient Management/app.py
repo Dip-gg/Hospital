@@ -6,11 +6,12 @@ import random
 import string
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
 
 # Define the path to the JSON file
 DATA_FILE = 'data2.json'
-SAVE_DIR = "saved_data.json"
+SAVE_DIR = "SAVED_DATA"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 
@@ -102,18 +103,19 @@ def register_new_patient():
         return jsonify({"error": "Error decoding JSON"}), 500
 
 
-@app.route('/submit-colunms', methods=['POST'])
+@app.route('/submit-columns', methods=['POST', 'OPTIONS'])
 def save_json():
+    if request.method == 'OPTIONS':
+        # Handle preflight request
+        return jsonify({"message": "CORS preflight passed"}), 200
+    
     try:
-        # Get JSON data from request
+        # Handle POST request (actual logic here)
         data = request.get_json()
         if not data:
             return jsonify({"message": "No JSON data provided"}), 400
 
-        # Create a file name based on a unique identifier (e.g., timestamp)
         file_name = os.path.join(SAVE_DIR, "filtered_data.json")
-
-        # Save the JSON data to the file
         with open(file_name, 'w') as file:
             json.dump(data, file, indent=4)
 

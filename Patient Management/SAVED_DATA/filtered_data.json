@@ -1,0 +1,12 @@
+{
+    "selectedColumns": [
+        "patient_id",
+        "first_name",
+        "last_name",
+        "date_of_birth",
+        "medical_history",
+        "allergies",
+        "emergency_contact",
+        "insurance_info"
+    ]
+}

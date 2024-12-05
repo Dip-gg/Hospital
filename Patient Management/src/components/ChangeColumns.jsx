@@ -63,17 +63,22 @@ const ChangeColumns = () => {
     };
 
     const handleSubmit = async () => {
-        const payload = { selectedColumns, data: filteredData };
+        const payload = { selectedColumns };
         console.log("Payload:", payload);
 
         try {
-            const response = await axios.post("http://localhost:8080/submit-columns", payload);
+            const response = await axios.post(
+                "http://localhost:8080/submit-columns",
+                payload,
+                { headers: { "Content-Type": "application/json" } }
+            );
             alert("Data submitted successfully!");
         } catch (error) {
             console.error("Error submitting data:", error);
             alert("Failed to submit data");
         }
     };
+
 
     return (
         <Paper withBorder p="md" radius="md">
