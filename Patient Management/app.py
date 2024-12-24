@@ -124,6 +124,24 @@ def save_json():
         return jsonify({"message": "An error occurred", "error": str(e)}), 500
 
 
+@app.route('/get_columns', methods=['GET'])
+def get_columns():
+    try:
+        file_name = os.path.join(SAVE_DIR, "filtered_data.json")
+
+        if not os.path.exists(file_name):
+            return jsonify({"Error": "File not found"}), 404
+        
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+        
+        return jsonify(data), 200
+    except json.JSONDecodeError:
+        return jsonify({"Error": "Error decoding JSON"}), 500
+    except Exception as e:
+        return jsonify({"Error": f"An unexpected error occurred: {str(e)}"}), 500
+
+
 if __name__ == '__main__':
     # Ensure the JSON file exists
     if not os.path.exists(DATA_FILE):

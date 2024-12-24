@@ -82,9 +82,23 @@ function RegisterPage() {
   };
 
   const handleSubmit = async () => {
-    const payload = { ...formData };
+    const formatDate = (date) => {
+      if (!date) return null;
+      return new Date(date).toLocaleDateString('en-GB'); // Formats to DD/MM/YYYY
+    };
+
+    const payload = {
+      ...formData,
+      date_of_birth: formatDate(formData.date_of_birth),
+      medical_history: showMedicalHistory
+        ? formData.medical_history.map((entry) => ({
+          ...entry,
+          diagnosed_date: formatDate(entry.diagnosed_date),
+        }))
+        : null,
+    };
+
     if (!showInsurance) payload.insurance_info = null;
-    if (!showMedicalHistory) payload.medical_history = null;
     if (!showMedications) payload.current_medications = null;
 
     try {
@@ -96,6 +110,7 @@ function RegisterPage() {
       setNotification({ type: 'error', message });
     }
   };
+
 
   return (
     <Container>
@@ -141,6 +156,7 @@ function RegisterPage() {
       {/* Date of Birth and Gender */}
       <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <DatePickerInput
+          inputformat="DD/MM/YYYY"
           leftSection={icon}
           leftSectionPointerEvents="none"
           mt="md"
