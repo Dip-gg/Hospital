@@ -4,9 +4,12 @@
         "first_name",
         "last_name",
         "date_of_birth",
+        "gender",
         "medical_history",
         "allergies",
-        "doctor_assigned",
-        "insurance_info"
+        "current_medications",
+        "emergency_contact",
+        "insurance_info",
+        "doctor_assigned"
     ]
 }
