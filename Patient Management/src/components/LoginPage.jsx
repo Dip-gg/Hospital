@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
+import { useAuth } from '../auth/AuthContext';
 import axios from 'axios';
 import {
   Paper,
@@ -17,6 +18,7 @@ import {
 } from '@mantine/core';
 
 function LoginPage() {
+  const { setIsAdmin } = useAuth();
   const [type, toggle] = useToggle(['login', 'register']);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -37,12 +39,9 @@ function LoginPage() {
       });
 
       if (response.data.success) {
-        if (response.data.is_admin) {
-          alert('Logged in as Admin');
-        } else {
-          alert('Logged in as Regular User');
-        }
-        navigate('/home', { state: { isAdmin: response.data.is_admin } }); // Navigate to home page upon successful login
+        setIsAdmin(response.data.is_admin); // Set isAdmin in context
+
+        navigate('/home'); // Navigate without using state
       } else {
         setError(response.data.message || 'Login failed');
       }
@@ -50,6 +49,29 @@ function LoginPage() {
       setError('An error occurred during login. Please try again.');
     }
   };
+
+
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await axios.post('http://localhost:8080/login', {
+  //       username: form.values.username,
+  //       password: form.values.password,
+  //     });
+
+  //     if (response.data.success) {
+  //       if (response.data.is_admin) {
+  //         alert('Logged in as Admin');
+  //       } else {
+  //         alert('Logged in as Regular User');
+  //       }
+  //       navigate('/home', { state: { isAdmin: response.data.is_admin } }); // Navigate to home page upon successful login
+  //     } else {
+  //       setError(response.data.message || 'Login failed');
+  //     }
+  //   } catch (err) {
+  //     setError('An error occurred during login. Please try again.');
+  //   }
+  // };
 
   return (
     <div className="wrapper">

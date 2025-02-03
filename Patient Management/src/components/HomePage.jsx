@@ -3,6 +3,7 @@ import { AppShell, Burger, Group, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
 import RegisterPage from './RegisterPatient';
 import PatientDataTable from './Dummy';
 import ChangeColumns from './ChangeColumns'; // Add a ChangeColumns component
@@ -13,7 +14,7 @@ export function HomePage() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [currentPage, setCurrentPage] = useState('main');
-  const isAdmin = location.state?.isAdmin || false;
+  const {isAdmin, setIsAdmin} = useAuth();
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
